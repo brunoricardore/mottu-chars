@@ -5,11 +5,12 @@ import { FavoritesComponent } from './pages/favorites/favorites.component';
 export const routes: Routes = [
   {
     path: 'home',
-    component: HomeComponent
+    loadComponent : () => import('./pages/home/home.component').then(m => m.HomeComponent)
   },
   {
     path: 'fav',
-    component: FavoritesComponent
+    // component: FavoritesComponent
+    loadComponent : () => import('./pages/favorites/favorites.component').then(m => m.FavoritesComponent)
   },
   {
     path: '**',
