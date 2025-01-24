@@ -1,0 +1,28 @@
+<div class="page">
+    <div class="header">
+        <span class="title">INÍCIO</span>
+
+        <app-input [control]="formControl"></app-input>
+
+    </div>
+
+    <div class="content-box" *ngIf=" currentItems$ | async as data">
+
+        <app-message-box *ngIf="currentSearch !== '' && totalItems < 1">
+            <p class="title">Nada foi encontrado</p>
+            <p class="subtitle">Tente realizar uma nova busca.</p>
+        </app-message-box>
+
+        <div class="list-box" *ngIf="data.length > 0">
+            <app-character-card *ngFor="let char of data" [character]="char">
+            </app-character-card>
+        </div>
+
+        <div *ngIf="hasMore" class="d-flex justify-content-center mt-5">
+            <button [disabled]="loading" (click)="loadMore()" class="btn btn-light">Load More</button>
+        </div>
+
+    </div>
+</div>
+
+<app-loader-spinner *ngIf="loading"></app-loader-spinner>

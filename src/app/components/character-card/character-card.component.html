@@ -1,0 +1,12 @@
+<div class="card" *ngIf="character()">
+    <img [src]="character()?.image" alt="">
+    <div class="info">
+        <div class="name">{{character()?.name}}</div>
+        <div class="type">{{character()?.species}}</div>
+    </div>
+
+    <a href="javascript:;" (click)="toggleFavorite(character()!.id)" class="btn fav-button" [class.active]="isFavorite">
+        <i *ngIf="isFavorite" class="fa-solid fa-heart"></i>
+        <i *ngIf="!isFavorite" class="fa-regular fa-heart"></i>
+    </a>
+</div>

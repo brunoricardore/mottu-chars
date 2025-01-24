@@ -1,0 +1,24 @@
+:host {
+    min-height: 100vh;
+}
+
+.header {
+    margin-bottom: 49px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .title {
+        font-family: var(--font-creepster);
+        font-size: 48px;
+        color: #00B5CC;
+        -webkit-text-stroke: 2px #B2DF28;
+        text-stroke: 2px #B2DF28;
+    }
+}
+
+.list-box {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 1fr 1fr 1fr;
+}

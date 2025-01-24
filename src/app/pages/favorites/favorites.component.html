@@ -1,0 +1,21 @@
+<div class="page">
+    <div class="header">
+        <span class="title">FAVORITOS</span>
+    </div>
+
+    <div class="content-box" >
+        <app-message-box *ngIf="favoritesLength < 1">
+            <p class="title">Parece que você ainda não tem favoritos</p>
+            <p class="subtitle">Volte à página inicial e escolha os melhores para você.</p>
+            <a routerLink="/" class="btn btn-light">Voltar ao início</a>
+        </app-message-box>
+
+        <div class="list-box" *ngIf="favorites$ | async as data">
+            <app-character-card *ngFor="let char of data" [character]="char">
+            </app-character-card>
+        </div>
+
+    </div>
+</div>
+
+<app-loader-spinner *ngIf="loading"></app-loader-spinner>

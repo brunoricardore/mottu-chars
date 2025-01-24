@@ -1,0 +1,15 @@
+<div class="topbar">
+
+    <div class="btn-group">
+        <a routerLink="/home" class="btn btn-outline-secondary " routerLinkActive="btn-light text-dark">
+            <i class="fa-solid fa-house"></i>
+            Inicio
+        </a>
+        <a routerLink="/fav" class="btn btn-outline-secondary btn-fav " routerLinkActive="btn-light text-dark">
+            <i class="fa-solid fa-heart"></i>
+            Favoritos
+            <app-badge [value]="totalOfFavorites" ></app-badge>
+        </a>
+    </div>
+
+</div>
