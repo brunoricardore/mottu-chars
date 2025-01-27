@@ -19,7 +19,7 @@ export class CharacterCardComponent {
 
   get isFavorite() {
     if (!this.character()) return false;
-    return this.favoriteService.currentList.includes(this.character()?.id!);
+    return this.favoriteService.currentIDList.includes(this.character()?.id!);
   }
 
 }

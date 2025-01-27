@@ -18,3 +18,16 @@
     gap: 8px;
 }
 
+.centered-component {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    // align-items: center;
+}
+
+.list-box {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, 224px);
+    justify-content: center;
+}

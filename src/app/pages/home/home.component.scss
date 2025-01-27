@@ -1,5 +1,7 @@
 :host {
     min-height: 100vh;
+    max-width: 720px;
+    flex-grow: 1;
 }
 
 .header {
@@ -7,6 +9,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 24px;
 
     .title {
         font-family: var(--font-creepster);
@@ -15,10 +18,9 @@
         -webkit-text-stroke: 2px #B2DF28;
         text-stroke: 2px #B2DF28;
     }
-}
 
-.list-box {
-    display: grid;
-    gap: 24px;
-    grid-template-columns: 1fr 1fr 1fr;
+    @media(max-width: 510px) {
+        flex-direction: column;
+    }
+
 }

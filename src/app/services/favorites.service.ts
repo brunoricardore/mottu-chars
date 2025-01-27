@@ -1,42 +1,83 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject, take } from 'rxjs';
+import { Character } from '../models/api.models';
+import { CharacterService } from './character.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FavoritesService {
 
-  private _favoriteList: number[] = [];
-  favoriteList$ = new BehaviorSubject<number[]>([]);
+  private charService = inject(CharacterService);
 
-  get favorites$() {
-    return this.favoriteList$.asObservable();
+  private _favoriteIDList: number[] = [];
+  private _favoriteCharacters: Character[] = [];
+
+  _favoriteIDList$ = new BehaviorSubject<number[]>([]);
+  _favoriteCharacters$ = new BehaviorSubject<Character[]>([]);
+
+  get favoriteIDList() {
+    return this._favoriteIDList;
   }
 
-  get currentList() {
-    return this.favoriteList$.getValue();
+  set favoriteIDList(data: number[]) {
+    this._favoriteIDList = data;
+    this._favoriteIDList$.next(this._favoriteIDList);
+    if (this._favoriteIDList.length > 0) {
+      this.fetchFavoritesData();
+    } else {
+      this.favoriteCharacters = [];
+    }
+  }
+
+  get favoriteCharacters() {
+    return this._favoriteCharacters;
+  }
+
+  set favoriteCharacters(data: Character[]) {
+    this._favoriteCharacters = data;
+    this._favoriteCharacters$.next(this._favoriteCharacters);
+  }
+
+  get favoriteCharacters$() {
+    return this._favoriteCharacters$.asObservable();
+  }
+
+  get currentIDList() {
+    return this._favoriteIDList$.getValue();
   }
 
   get currentLength() {
-    return this.currentList.length;
+    return this.currentIDList.length;
   }
 
   toggleFavorite(id: number) {
-    const index = this._favoriteList.findIndex(i => i === id);
+    const index = this._favoriteIDList.findIndex(i => i === id);
     if (index === -1) {
       this.addItem(id)
     } else {
-      this.removeItem(index);
+      this.removeItem(id);
     }
   }
 
   addItem(id: number) {
-    this._favoriteList.push(id);
-    this.favoriteList$.next(this._favoriteList);
+    const updatedList = [
+      ...this._favoriteIDList,
+      id
+    ];
+    this.favoriteIDList = updatedList;
   }
 
-  removeItem(index: number) {
-    this._favoriteList.splice(index, 1);
-    this.favoriteList$.next(this._favoriteList);
+  removeItem(id: number) {
+    const updatedList = this._favoriteIDList.filter(item => item !== id);
+    this.favoriteIDList = updatedList;
+  }
+
+  fetchFavoritesData() {
+    this.charService.fetchCharacterByIds(this._favoriteIDList)
+      .pipe(take(1))
+      .subscribe(data => {
+        this.favoriteCharacters = data;
+      })
   }
 }

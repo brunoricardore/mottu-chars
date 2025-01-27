@@ -28,26 +28,8 @@ export class FavoritesComponent implements OnInit {
     return this.favService.currentLength;
   }
 
-  get favorites() {
-    return this.favService.currentList;
-  }
-
   ngOnInit(): void {
-    if (this.favoritesLength > 0) {
-      this.loading = true;
-      this.getFavorites();
-    }
-  }
-
-  getFavorites() {
-    this.favService.favoriteList$.subscribe(list => {
-      this.favorites$ = this.characterService.fetchCharacterByIds(list)
-        .pipe(
-          finalize(() => {
-            this.loading = false;
-          })
-        )
-    })
+    this.favorites$ = this.favService.favoriteCharacters$;
   }
 
 }
