@@ -70,14 +70,25 @@ export class FavoritesService {
 
   removeItem(id: number) {
     const updatedList = this._favoriteIDList.filter(item => item !== id);
+    this.favoriteCharacters = this.favoriteCharacters.filter(char => char.id !== id);
+
     this.favoriteIDList = updatedList;
   }
 
   fetchFavoritesData() {
-    this.charService.fetchCharacterByIds(this._favoriteIDList)
-      .pipe(take(1))
-      .subscribe(data => {
-        this.favoriteCharacters = data;
-      })
+    const fetchedId = this.favoriteCharacters.map(char => char.id);
+    const idsToFetch = this.favoriteIDList.filter(id => !fetchedId.includes(id));
+
+    if (idsToFetch.length > 0) {
+      this.charService.fetchCharacterByIds(idsToFetch)
+        .pipe(take(1))
+        .subscribe(data => {
+          this.favoriteCharacters = [
+            ...this.favoriteCharacters,
+            ...data
+          ];
+        })
+    }
+
   }
 }
